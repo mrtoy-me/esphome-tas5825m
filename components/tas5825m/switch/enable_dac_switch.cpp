@@ -1,9 +1,9 @@
 #include "enable_dac_switch.h"
 #include "esphome/core/log.h"
 
-namespace esphome::tas5805m {
+namespace esphome::tas5825m {
 
-static const char *const TAG = "tas5805m.switch";
+static const char *const TAG = "tas5825m.switch";
 
 void EnableDacSwitch::setup() {
   optional<bool> initial_state = this->get_initial_state_with_restore_mode();
@@ -12,7 +12,7 @@ void EnableDacSwitch::setup() {
 }
 
 void EnableDacSwitch::dump_config() {
-  ESP_LOGCONFIG(TAG, "Tas5805m Switch:");
+  ESP_LOGCONFIG(TAG, "Tas5825m Switch:");
   LOG_SWITCH("  ", "Enable Dac", this);
 }
 
@@ -21,4 +21,4 @@ void EnableDacSwitch::write_state(bool state) {
   this->parent_->enable_dac(state);
 }
 
-}  // namespace esphome::tas5805m
+}  // namespace esphome::tas5825m

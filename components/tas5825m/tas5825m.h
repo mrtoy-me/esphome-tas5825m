@@ -1,20 +1,21 @@
+
 #pragma once
 
 #include "esphome/components/audio_dac/audio_dac.h"
 #include "esphome/core/component.h"
 #include "esphome/components/i2c/i2c.h"
 #include "esphome/core/hal.h"
-#include "tas5805m_cfg.h"
+#include "tas5825m_cfg.h"
 
-#ifdef USE_TAS5805M_EQ
-#include "tas5805m_eq.h"
+#ifdef USE_TAS5825M_EQ
+#include "tas5825m_eq.h"
 #endif
 
-#ifdef USE_TAS5805M_BINARY_SENSOR
+#ifdef USE_TAS5825M_BINARY_SENSOR
 #include "esphome/components/binary_sensor/binary_sensor.h"
 #endif
 
-namespace esphome::tas5805m {
+namespace esphome::tas5825m {
 
 enum AutoRefreshMode : uint8_t {
     BY_GAIN   = 0,
@@ -26,7 +27,7 @@ enum ExcludeIgnoreMode : uint8_t {
     CLOCK_FAULT = 1,
 };
 
-class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, public i2c::I2CDevice {
+class Tas5825mComponent : public audio_dac::AudioDac, public PollingComponent, public i2c::I2CDevice {
  public:
   void setup() override;
 
@@ -41,22 +42,22 @@ class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, p
 
   // optional YAML config
 
-  void config_analog_gain(float analog_gain) { this->tas5805m_analog_gain_ = analog_gain; }
+  void config_analog_gain(float analog_gain) { this->tas5825m_analog_gain_ = analog_gain; }
 
-  void config_dac_mode(DacMode dac_mode) {this->tas5805m_dac_mode_ = dac_mode; }
+  void config_dac_mode(DacMode dac_mode) {this->tas5825m_dac_mode_ = dac_mode; }
 
   void config_ignore_fault_mode(ExcludeIgnoreMode ignore_fault_mode) {
     this->ignore_clock_faults_when_clearing_faults_ = (ignore_fault_mode == ExcludeIgnoreMode::CLOCK_FAULT);
   }
 
-  void config_mixer_mode(MixerMode mixer_mode) {this->tas5805m_mixer_mode_ = mixer_mode; }
+  void config_mixer_mode(MixerMode mixer_mode) {this->tas5825m_mixer_mode_ = mixer_mode; }
 
   void config_refresh_eq(AutoRefreshMode auto_refresh) { this->auto_refresh_ = auto_refresh; }
 
-  void config_volume_max(float volume_max) {this->tas5805m_volume_max_ = (int8_t)(volume_max); }
-  void config_volume_min(float volume_min) {this->tas5805m_volume_min_ = (int8_t)(volume_min); }
+  void config_volume_max(float volume_max) {this->tas5825m_volume_max_ = (int8_t)(volume_max); }
+  void config_volume_min(float volume_min) {this->tas5825m_volume_min_ = (int8_t)(volume_min); }
 
-  #ifdef USE_TAS5805M_BINARY_SENSOR
+  #ifdef USE_TAS5825M_BINARY_SENSOR
   SUB_BINARY_SENSOR(have_fault)
   SUB_BINARY_SENSOR(left_channel_dc_fault)
   SUB_BINARY_SENSOR(right_channel_dc_fault)
@@ -81,7 +82,7 @@ class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, p
 
   bool enable_eq(bool enable);
 
-  #ifdef USE_TAS5805M_EQ
+  #ifdef USE_TAS5825M_EQ
   bool set_eq_gain(uint8_t band, int8_t gain);
   #endif
 
@@ -116,7 +117,7 @@ class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, p
    bool get_digital_volume_(uint8_t* raw_volume);
    bool set_digital_volume_(uint8_t new_volume);
 
-   #ifdef USE_TAS5805M_EQ
+   #ifdef USE_TAS5825M_EQ
    bool get_eq_(bool* enabled);
    #endif
 
@@ -132,7 +133,7 @@ class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, p
    // manage faults
    bool clear_fault_registers_();
    bool read_fault_registers_();
-   #ifdef USE_TAS5805M_BINARY_SENSOR
+   #ifdef USE_TAS5825M_BINARY_SENSOR
    void publish_faults_();
    void publish_channel_faults_();
    void publish_global_faults_();
@@ -141,10 +142,10 @@ class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, p
    // low level functions
    bool set_book_and_page_(uint8_t book, uint8_t page);
 
-   bool tas5805m_read_byte_(uint8_t a_register, uint8_t* data);
-   bool tas5805m_read_bytes_(uint8_t a_register, uint8_t* data, uint8_t number_bytes);
-   bool tas5805m_write_byte_(uint8_t a_register, uint8_t data);
-   bool tas5805m_write_bytes_(uint8_t a_register, uint8_t *data, uint8_t len);
+   bool tas5825m_read_byte_(uint8_t a_register, uint8_t* data);
+   bool tas5825m_read_bytes_(uint8_t a_register, uint8_t* data, uint8_t number_bytes);
+   bool tas5825m_write_byte_(uint8_t a_register, uint8_t data);
+   bool tas5825m_write_bytes_(uint8_t a_register, uint8_t *data, uint8_t len);
 
    enum ErrorCode {
      NONE = 0,
@@ -154,32 +155,32 @@ class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, p
    // configured by YAML
    AutoRefreshMode auto_refresh_;  // default 'BY_GAIN' = 0
 
-   #ifdef USE_TAS5805M_BINARY_SENSOR
+   #ifdef USE_TAS5825M_BINARY_SENSOR
    bool exclude_clock_fault_from_have_faults_; // default = false
    #endif
 
    bool ignore_clock_faults_when_clearing_faults_; // default = false
 
-   DacMode tas5805m_dac_mode_;
+   DacMode tas5825m_dac_mode_;
 
-   float tas5805m_analog_gain_;
+   float tas5825m_analog_gain_;
 
-   int8_t tas5805m_volume_max_;
-   int8_t tas5805m_volume_min_;
+   int8_t tas5825m_volume_max_;
+   int8_t tas5825m_volume_min_;
 
-   MixerMode tas5805m_mixer_mode_;
+   MixerMode tas5825m_mixer_mode_;
 
    // used if eq gain numbers are defined in YAML
-   #ifdef USE_TAS5805M_EQ
-   bool tas5805m_eq_enabled_;
-   int8_t tas5805m_eq_gain_[NUMBER_EQ_BANDS]{0};
+   #ifdef USE_TAS5825M_EQ
+   bool tas5825m_eq_enabled_;
+   int8_t tas5825m_eq_gain_[NUMBER_EQ_BANDS]{0};
    #endif
 
    // initialised in setup
-   ControlState tas5805m_control_state_;
+   ControlState tas5825m_control_state_;
 
-   uint8_t tas5805m_raw_volume_max_;
-   uint8_t tas5805m_raw_volume_min_;
+   uint8_t tas5825m_raw_volume_max_;
+   uint8_t tas5825m_raw_volume_min_;
 
    // fault processing
    bool have_fault_to_clear_{false}; // false so clear fault registers is skipped on first update
@@ -192,7 +193,7 @@ class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, p
    bool is_new_over_temperature_issue_{true};
 
    // current state of faults
-   Tas5805mFault tas5805m_faults_;
+   Tas5825mFault tas5825m_faults_;
 
    // counts number of times the faults register is cleared (used for publishing to sensor)
    uint32_t times_faults_cleared_{0};
@@ -215,7 +216,7 @@ class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, p
    bool update_delay_finished_{false};
 
    // are eq gain numbers configured in YAML
-   #ifdef USE_TAS5805M_EQ
+   #ifdef USE_TAS5825M_EQ
    bool using_eq_gains_{true};
    #else
    bool using_eq_gains_{false};
@@ -230,11 +231,11 @@ class Tas5805mComponent : public audio_dac::AudioDac, public PollingComponent, p
    // used for counting number of 'loops' iterations for delay of starting 'loop'
    uint8_t loop_counter_{0};
 
-   // number tas5805m registers configured during 'setup'
+   // number tas5825m registers configured during 'setup'
    uint16_t number_registers_configured_{0};
 
    // initialised in loop, used for delay in starting 'update'
    uint32_t start_time_;
 };
 
-}  // namespace esphome::tas5805m
+}  // namespace esphome::tas5825m

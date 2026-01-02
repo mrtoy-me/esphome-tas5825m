@@ -1,9 +1,9 @@
 #include "enable_eq_switch.h"
 #include "esphome/core/log.h"
 
-namespace esphome::tas5805m {
+namespace esphome::tas5825m {
 
-static const char *const TAG = "tas5805m.switch";
+static const char *const TAG = "tas5825m.switch";
 
 void EnableEqSwitch::setup() {
   optional<bool> initial_state = this->get_initial_state_with_restore_mode();
@@ -23,7 +23,7 @@ void EnableEqSwitch::setup() {
 }
 
 void EnableEqSwitch::dump_config() {
-  ESP_LOGCONFIG(TAG, "Tas5805m Switch:");
+  ESP_LOGCONFIG(TAG, "Tas5825m Switch:");
   LOG_SWITCH("  ", "Enable EQ", this);
 }
 
@@ -45,4 +45,4 @@ void EnableEqSwitch::write_state(bool state) {
   }
 }
 
-}  // namespace esphome::tas5805m
+}  // namespace esphome::tas5825m

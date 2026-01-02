@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../tas5805m.h"
+#include "../tas5825m.h"
 #include "esphome/components/switch/switch.h"
 #include "esphome/core/component.h"
 
-namespace esphome::tas5805m {
+namespace esphome::tas5825m {
 
-class EnableEqSwitch : public switch_::Switch, public Component, public Parented<Tas5805mComponent> {
+class EnableEqSwitch : public switch_::Switch, public Component, public Parented<Tas5825mComponent> {
 public:
   void setup() override;
   void dump_config() override;
@@ -18,4 +18,4 @@ protected:
   bool trigger_refresh_settings_{false};
 };
 
-}  // namespace esphome::tas5805m
+}  // namespace esphome::tas5825m

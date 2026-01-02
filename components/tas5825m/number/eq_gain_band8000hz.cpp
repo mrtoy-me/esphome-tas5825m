@@ -1,9 +1,9 @@
 #include "esphome/core/log.h"
 #include "eq_gain_band8000hz.h"
 
-namespace esphome::tas5805m {
+namespace esphome::tas5825m {
 
-static const char *const TAG = "tas5805m.number";
+static const char *const TAG = "tas5825m.number";
 
 void EqGainBand8000hz::setup() {
   float value;
@@ -23,4 +23,4 @@ void EqGainBand8000hz::control(float value) {
   this->pref_.save(&value);
 }
 
-}  // namespace esphome::tas5805m
+}  // namespace esphome::tas5825m

@@ -2,16 +2,16 @@
 
 #include "tas5805m.h"
 
-namespace esphome::tas5805m {
+namespace esphome::tas5825m {
 
-static const Tas5805mConfiguration TAS5805M_REGISTERS[] = {
+static const Tas5825mConfiguration TAS5825M_REGISTERS[] = {
 // RESET
     { 0x00, 0x00 },
     { 0x7f, 0x00 },
     { 0x03, 0x02 },
     { 0x01, 0x11 },
     { 0x03, 0x02 },
-    { TAS5805M_CFG_META_DELAY, 5 },
+    { TAS5825M_CFG_META_DELAY, 5 },
     { 0x03, 0x00 },
     { 0x46, 0x01 },
     { 0x03, 0x02 },
@@ -33,4 +33,4 @@ static const Tas5805mConfiguration TAS5805M_REGISTERS[] = {
     { 0x78, 0x80 },
 };
 
-}  // namespace esphome::tas5805m
+}  // namespace esphome::tas5825m

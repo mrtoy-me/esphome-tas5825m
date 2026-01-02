@@ -19,29 +19,29 @@ CONF_MIXER_MODE = "mixer_mode"
 CONF_REFRESH_EQ = "refresh_eq"
 CONF_VOLUME_MIN = "volume_min"
 CONF_VOLUME_MAX = "volume_max"
-CONF_TAS5805M_ID = "tas5805m_id"
+CONF_TAS5825M_ID = "tas5825m_id"
 
-tas5805m_ns = cg.esphome_ns.namespace("tas5805m")
-Tas5805mComponent = tas5805m_ns.class_("Tas5805mComponent", AudioDac, cg.PollingComponent, i2c.I2CDevice)
+tas5825m_ns = cg.esphome_ns.namespace("tas5825m")
+tas5825mComponent = tas5825m_ns.class_("Tas5825mComponent", AudioDac, cg.PollingComponent, i2c.I2CDevice)
 
-AutoRefreshMode = tas5805m_ns.enum("AutoRefreshMode")
+AutoRefreshMode = tas5825m_ns.enum("AutoRefreshMode")
 AUTO_REFRESH_MODES = {
      "BY_GAIN"  : AutoRefreshMode.BY_GAIN,
      "BY_SWITCH": AutoRefreshMode.BY_SWITCH,
 }
 
-DacMode = tas5805m_ns.enum("DacMode")
+DacMode = tas5825m_ns.enum("DacMode")
 DAC_MODES = {
     "BTL" : DacMode.BTL,
     "PBTL": DacMode.PBTL,
 }
 
-ExcludeIgnoreMode = tas5805m_ns.enum("ExcludeIgnoreModes")
+ExcludeIgnoreMode = tas5825m_ns.enum("ExcludeIgnoreModes")
 EXCLUDE_IGNORE_MODES = {
      "NONE"        : ExcludeIgnoreMode.NONE,
      "CLOCK_FAULT" : ExcludeIgnoreMode.CLOCK_FAULT,
 }
-MixerMode = tas5805m_ns.enum("MixerMode")
+MixerMode = tas5825m_ns.enum("MixerMode")
 MIXER_MODES = {
     "STEREO"         : MixerMode.STEREO,
     "STEREO_INVERSE" : MixerMode.STEREO_INVERSE,
@@ -63,7 +63,7 @@ def validate_config(config):
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
-            cv.GenerateID(): cv.declare_id(Tas5805mComponent),
+            cv.GenerateID(): cv.declare_id(tas5825mComponent),
             cv.Required(CONF_ENABLE_PIN): pins.gpio_output_pin_schema,
             cv.Optional(CONF_ANALOG_GAIN, default="-15.5dB"): cv.All(
                         cv.decibel, cv.one_of(*ANALOG_GAINS)
