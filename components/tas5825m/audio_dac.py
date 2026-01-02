@@ -22,7 +22,7 @@ CONF_VOLUME_MAX = "volume_max"
 CONF_TAS5825M_ID = "tas5825m_id"
 
 tas5825m_ns = cg.esphome_ns.namespace("tas5825m")
-tas5825mComponent = tas5825m_ns.class_("Tas5825mComponent", AudioDac, cg.PollingComponent, i2c.I2CDevice)
+Tas5825mComponent = tas5825m_ns.class_("Tas5825mComponent", AudioDac, cg.PollingComponent, i2c.I2CDevice)
 
 AutoRefreshMode = tas5825m_ns.enum("AutoRefreshMode")
 AUTO_REFRESH_MODES = {
@@ -63,7 +63,7 @@ def validate_config(config):
 CONFIG_SCHEMA = cv.All(
     cv.Schema(
         {
-            cv.GenerateID(): cv.declare_id(tas5825mComponent),
+            cv.GenerateID(): cv.declare_id(Tas5825mComponent),
             cv.Required(CONF_ENABLE_PIN): pins.gpio_output_pin_schema,
             cv.Optional(CONF_ANALOG_GAIN, default="-15.5dB"): cv.All(
                         cv.decibel, cv.one_of(*ANALOG_GAINS)
