@@ -2,11 +2,11 @@
 
 #include "esphome/components/sensor/sensor.h"
 #include "esphome/core/component.h"
-#include "../tas5805m.h"
+#include "../tas5825m.h"
 
-namespace esphome::tas5805m {
+namespace esphome::tas5825m {
 
-class FaultSensor : public PollingComponent, public Parented<Tas5805mComponent> {
+class FaultSensor : public PollingComponent, public Parented<Tas5825mComponent> {
  public:
   void dump_config() override;
   void update() override;
@@ -21,4 +21,4 @@ class FaultSensor : public PollingComponent, public Parented<Tas5805mComponent> 
   uint32_t last_faults_cleared_{100000};
 };
 
-}  // namespace esphome::tas5805m
+}  // namespace esphome::tas5825m
