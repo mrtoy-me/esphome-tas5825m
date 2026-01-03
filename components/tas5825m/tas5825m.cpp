@@ -750,7 +750,7 @@ bool Tas5825mComponent::read_fault_registers_() {
   this->is_new_common_fault_ = (new_fault_state != this->tas5825m_faults_.clock_fault);
   this->tas5825m_faults_.clock_fault = new_fault_state;
 
-  this->tas5825m_faults_.have_fault_except_clock_fault =
+  this->tas5825m_faults_.is_fault_except_clock_fault =
     ( this->tas5825m_faults_.channel_fault || this->tas5825m_faults_.global_fault ||
       this->tas5825m_faults_.temperature_fault || this->tas5825m_faults_.temperature_warning );
 
